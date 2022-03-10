@@ -3,13 +3,13 @@ import torch.nn as nn
 
 class AlexNet(nn.Module):
   def __init__(self, num_class=4096):
-    super(AlexNet, self).__init__()
+    super(AlexNet, self).__init__()                 # 单继承，即只有一个父类,能够执行父类的构造函数，使得我们能够调用父类的属性 https://blog.csdn.net/weixin_43702920/article/details/107802103
     self.num_class = num_class
     self.create_model()
 
   def create_model(self):
     self.conv1 = nn.Sequential(nn.Conv2d(3, 96, (11, 11), stride=4, padding=2),
-                               nn.ReLU(inplace=True),
+                               nn.ReLU(inplace=True),                          # 参数： inplace-选择是否进行覆盖运算
                                nn.MaxPool2d((3, 3),stride=2))
     self.conv2 = nn.Sequential(nn.Conv2d(96, 256, (5, 5), stride=1, padding=2),
                                nn.ReLU(inplace=True),
@@ -50,7 +50,7 @@ class AlexNet(nn.Module):
 if __name__ == '__main__':
   input_tensor = torch.randn((1, 3, 224, 224))
   print("input: \n", input_tensor)
-  input_var = torch.autograd.Variable(input_tensor)
+  input_var = torch.autograd.Variable(input_tensor)    # 要想使用自动求导，只需要将所有的tensor包含进Variable对象中即可。
 
   model = AlexNet(num_class=10)
   output = model(input_var)
